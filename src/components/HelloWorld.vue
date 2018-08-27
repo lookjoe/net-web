@@ -15,11 +15,10 @@
         选择图片并上传
       </div>
       <input class="file" style="display: none" @change="upload" type="file"/>
+      <div class="">
+        图片是否上传成功: {{upImg}}
+      </div>
     </div>
-    <!-- <form class="" action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="f1" value="input">
-      <input type="submit" name="f2s" value="提交">
-    </form> -->
   </div>
 </template>
 
@@ -32,6 +31,7 @@ export default {
         password: ''
       },
       text: '',
+      upImg: '',
       imgSrc: '../static/avtor.jpg'
     }
   },
@@ -43,51 +43,26 @@ export default {
       let files = e.target.files[0]
       const formData = new FormData()
       formData.append('file', files)
-      console.log('data', formData.get('file'))
       if (!e || !window.FileReader) return
       let reader = new FileReader()
       reader.readAsDataURL(files)
       reader.onloadend = (e) => {
         this.imgSrc = e.target.result
       }
-      const opts = {
-        method: 'POST',
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // },
-        body: formData
-      }
-      let url = `http://localhost:3000/upload`
-      fetch(url, opts)
+      const data = formData
+      this.$api.upload(data)
         .then((res) => {
-          return res.json()
-        })
-        .then(data => {
-          console.log('res,data', data)
-        })
-        .catch((err) => {
-          console.log('err', err)
+          this.upImg = res
         })
     },
     signin () {
-      const opts = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-      let url = `http://localhost:3000/signin`
-      fetch(url, opts)
+      this.$api.user.signin()
         .then((res) => {
-          console.log('res', res)
-          return res.json()
-        })
-        .then(data => {
-          console.log('res,data', data)
-          this.text = data.msg
-        })
-        .catch((err) => {
-          console.log('err', err)
+          if (res.error) {
+            this.upImg = '失败'
+          } else {
+            this.text = res
+          }
         })
     },
 
@@ -96,27 +71,13 @@ export default {
         name: this.userInfo.username,
         password: this.userInfo.password
       }
-      const param = JSON.stringify(user)
-      const url = `http://localhost:3000/login`
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: param
-      })
-        .then(res => {
-          return res.json()
-        })
-        .then(data => {
-          if (data.error) {
-            this.text = data.error
+      this.$api.user.login(user)
+        .then((res) => {
+          if (res.error) {
+            this.text = res.error
           } else {
-            this.text = data.msg
+            this.text = res
           }
-        })
-        .catch((err) => {
-          console.log('err', err)
         })
     }
   }
