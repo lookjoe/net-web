@@ -1,22 +1,22 @@
 <template>
   <div class="hello">
     <div class="center">
-      账号: <input type="text" name="text" v-model="userInfo.username"/>
-      密码: <input type="password" name="password" v-model="userInfo.password"/>
-      <input @click="signin" type="submit" value="注册" />
-      <input @click="login" type="submit" value="登录" />
+      账号: <input type="text" name="text" v-model="userInfo.username" />
+      密码: <input type="password" name="password" v-model="userInfo.password" />
+      <input @click="signin()" type="submit" value="注册" />
+      <input @click="login()" type="submit" value="登录" />
     </div>
     <div class="welcome">
-      是否登陆：{{text}}
+      是否登陆：{{ text }}
     </div>
-    <img :src="imgSrc" class="img" alt="图片">
+    <img :src="imgSrc" class="img" alt="图片" />
     <div class="img-box">
-      <div class="" @click="changeAvtor()">
+      <div  @click="changeAvtor()">
         选择图片并上传
       </div>
-      <input class="file" style="display: none" @change="upload" type="file"/>
-      <div class="">
-        图片是否上传成功: {{upImg}}
+      <input class="file" style="display: none" @change="upload" type="file" />
+      <div>
+        图片是否上传成功: {{ upImg }}
       </div>
     </div>
   </div>
@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     changeAvtor () {
-      document.querySelector('input[type=file').click()
+      document.querySelector('input[type=file]').click()
     },
     upload (e) {
       let files = e.target.files[0]
@@ -55,15 +55,13 @@ export default {
           this.upImg = res
         })
     },
-    signin () {
-      this.$api.user.signin()
-        .then((res) => {
-          if (res.error) {
-            this.upImg = '失败'
-          } else {
-            this.text = res
-          }
-        })
+    async signin () {
+      let data = {
+        name: this.userInfo.username,
+        password: this.userInfo.password
+      }
+      let res = await this.$api.user.signin(data)
+      this.text = res
     },
 
     login () {
@@ -75,16 +73,17 @@ export default {
         .then((res) => {
           if (res.error) {
             this.text = res.error
-          } else {
-            this.text = res
+            return
           }
+          this.text = res
         })
     }
+  },
+  created () {
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .hello {
   width: 100%;
@@ -93,7 +92,6 @@ export default {
   align-items: center;
 }
 .center {
-  /* width: 400px; */
 }
 .welcome {
   margin-top: 50px;

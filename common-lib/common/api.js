@@ -9,8 +9,8 @@ export default {
   },
 
   user: {
-    signin () {
-      return apiRequest('/signin', 'POST')
+    signin (param) {
+      return apiRequest('/signin', 'POST', param)
     },
 
     login (param) {

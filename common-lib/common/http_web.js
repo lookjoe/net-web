@@ -15,7 +15,7 @@ function checkStatus (response) {
 
 // fecth .json()
 function parseJSON (response) {
-    return response.json()
+  return response.json()
 }
 
 // 处理msg
@@ -72,13 +72,13 @@ function uploadImg (url, data, onProgress = e => e) {
 }
 
 function upload (data, onProgress) {
-    var url = SERVER_URL + '/upload'
-    return uploadImg(url, data, onProgress)
-      .then((res) => {
-        return res
-      })
-      // .then(parseJSON)
-      .then(checkCode)
+  var url = SERVER_URL + '/upload'
+  return uploadImg(url, data, onProgress)
+    .then((res) => {
+      return res
+    })
+    // .then(parseJSON)
+    .then(checkCode)
 }
 
 export default {
