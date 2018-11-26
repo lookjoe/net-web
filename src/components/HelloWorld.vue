@@ -39,7 +39,8 @@ export default {
     changeAvtor () {
       document.querySelector('input[type=file]').click()
     },
-    upload (e) {
+
+    async upload (e) {
       let files = e.target.files[0]
       const formData = new FormData()
       formData.append('file', files)
@@ -50,11 +51,10 @@ export default {
         this.imgSrc = e.target.result
       }
       const data = formData
-      this.$api.upload(data)
-        .then((res) => {
-          this.upImg = res
-        })
+      let resUrl = this.$api.upload(data)
+      this.upImg = resUrl
     },
+
     async signin () {
       let data = {
         name: this.userInfo.username,
@@ -64,21 +64,20 @@ export default {
       this.text = res
     },
 
-    login () {
+    async login () {
       let user = {
         name: this.userInfo.username,
         password: this.userInfo.password
       }
-      this.$api.user.login(user)
-        .then((res) => {
-          if (res.error) {
-            this.text = res.error
-            return
-          }
-          this.text = res
-        })
+      let res = this.$api.user.login(user)
+      if (res.error) {
+        this.text = res.error
+        return
+      }
+      this.text = res
     }
   },
+
   created () {
   }
 }
@@ -90,8 +89,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.center {
 }
 .welcome {
   margin-top: 50px;
