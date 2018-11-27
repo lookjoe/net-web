@@ -51,7 +51,7 @@ export default {
         this.imgSrc = e.target.result
       }
       const data = formData
-      let resUrl = this.$api.upload(data)
+      let resUrl = await this.$api.upload(data)
       this.upImg = resUrl
     },
 
@@ -69,7 +69,8 @@ export default {
         name: this.userInfo.username,
         password: this.userInfo.password
       }
-      let res = this.$api.user.login(user)
+      let res = await this.$api.user.login(user)
+      console.log('res', res)
       if (res.error) {
         this.text = res.error
         return
