@@ -18,9 +18,9 @@ function parseJSON (response) {
 
 // 处理msg
 function checkCode (data) {
-//   if (data.msg) {
-//     return data.msg
-//   }
+    if (data.msg) {
+        return data.msg
+    }
     return data
 }
 
@@ -48,6 +48,7 @@ function apiRequest (path, method = 'GET', data = null) {
         .then(parseJSON)
         .then(checkCode)
 }
+
 function getToken () {
     return localStorage.getItem('token')
 }
@@ -59,7 +60,6 @@ function uploadImg (url, data, onProgress = e => e) {
         xhr.open('POST', url)
         xhr.setRequestHeader('Authorization', token)
         xhr.onload = (e) => {
-        // resolve(e.target.responseText)
             resolve(JSON.parse(e.target.responseText))
         }
         xhr.onerror = reject
@@ -83,7 +83,6 @@ function upload (data, onProgress) {
         .then((res) => {
             return res
         })
-        // .then(parseJSON)
         .then(checkCode)
 }
 

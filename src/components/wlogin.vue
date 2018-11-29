@@ -53,7 +53,21 @@ export default {
             'vuexSignin'
         ]),
 
+        // 判断条件
+        userCheck () {
+            let validtor = this.$check()
+            validtor.addRule(this.userInfo.username, [
+                { strategy: 'isEmpty', error: '用户名不能为空' }
+            ])
+            validtor.addRule(this.userInfo.password, [
+                { strategy: 'isEmpty', error: '密码不能为空' }
+            ])
+            return validtor.check()
+        },
+
         signin () {
+            let msg = this.userCheck()
+            if (msg) return false
             let data = {
                 name: this.userInfo.username,
                 password: this.userInfo.password
@@ -62,6 +76,8 @@ export default {
         },
 
         login () {
+            let msg = this.userCheck()
+            if (msg) return false
             let user = {
                 name: this.userInfo.username,
                 password: this.userInfo.password

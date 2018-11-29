@@ -3,12 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import api from '@/api/common/api'
 import store from '@/store'
+import Api from '@/api/common/api'
+import Strategy from '@/util/strategy'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$api = api
+Vue.prototype.$api = Api
+Vue.prototype.$check = Strategy
 
 /* eslint-disable no-new */
 new Vue({

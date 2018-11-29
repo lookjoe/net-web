@@ -8,6 +8,9 @@
 # install dependencies
 npm install
 
+需改动 api header 请求 src/api/common/http_web.js
+Authorization: 'Bearer' + token
+
 # serve with hot reload at localhost:8080
 npm run dev
 

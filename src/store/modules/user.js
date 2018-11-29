@@ -8,7 +8,7 @@ import {
 
 const state = {
     // 用户信息
-    userInfo: { token: 0 },
+    userInfo: { },
     // 登陆状态
     loginStatus: 0,
     // 注册状态
@@ -47,14 +47,14 @@ const actions = {
     async vuexLogin ({ commit }, user) {
         let res = await api.user.login(user)
         localStorage.setItem('token', res.token)
-        if (res.error) return
+        if (res.error) return false
         commit(SETLOGINSTATUS, 1)
         commit(SETUSERINFO, user)
     },
 
     async vuexSignin ({ commit }, user) {
         let res = await api.user.signin(user)
-        if (res.error) return
+        if (res.error) return false
         commit(SETSIGNIN, 1)
     }
 }
