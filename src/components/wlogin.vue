@@ -65,24 +65,30 @@ export default {
             return validtor.check()
         },
 
-        signin () {
+        getUser () {
             let msg = this.userCheck()
             if (msg) return false
-            let data = {
+            return {
                 name: this.userInfo.username,
                 password: this.userInfo.password
             }
-            this.vuexSignin(data)
+        },
+
+        signin () {
+            // 返回 false return
+            if (!this.getUser()) return false
+            this.vuexSignin({
+                user: this.getUser(),
+                msg: '注册成功'
+            })
         },
 
         login () {
-            let msg = this.userCheck()
-            if (msg) return false
-            let user = {
-                name: this.userInfo.username,
-                password: this.userInfo.password
-            }
-            this.vuexLogin(user)
+            if (!this.getUser()) return false
+            this.vuexLogin({
+                user: this.getUser(),
+                msg: '登陆成功'
+            })
         }
     },
 

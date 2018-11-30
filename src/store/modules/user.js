@@ -1,4 +1,5 @@
 import api from '@/api/common/api'
+import showToast from '@/mixin'
 
 import {
     SETUSERINFO,
@@ -44,17 +45,29 @@ const mutations = {
 }
 
 const actions = {
-    async vuexLogin ({ commit }, user) {
+    async vuexLogin ({ commit }, data) {
+        const { user, msg } = data
+
         let res = await api.user.login(user)
         localStorage.setItem('token', res.token)
         if (res.error) return false
+
+        if (msg) {
+            showToast.methods.showSucToast(msg)
+        }
         commit(SETLOGINSTATUS, 1)
         commit(SETUSERINFO, user)
     },
 
-    async vuexSignin ({ commit }, user) {
+    async vuexSignin ({ commit }, data) {
+        const { user, msg } = data
         let res = await api.user.signin(user)
         if (res.error) return false
+
+        // 需要成功提示传入 msg
+        if (msg) {
+            showToast.methods.showSucToast(msg)
+        }
         commit(SETSIGNIN, 1)
     }
 }

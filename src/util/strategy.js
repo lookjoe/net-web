@@ -1,3 +1,4 @@
+import showToast from '@/mixin'
 // 策略模式 验证满足条件 例如账号不能为空 使用情况 多条件判断
 // 策略对象
 let strategys = {
@@ -14,7 +15,7 @@ let testObj = {
             throw new Error('strategy')
         }
         if (!t.error) {
-            throw new Error('error')
+            // throw new Error('error')
         }
     }
 }
@@ -47,8 +48,9 @@ class Validator {
         for (let i = 0; i < this.cache.length; i++) {
             let msg = this.cache[i]() // 开始效验 并取得效验后的返回信息
             if (msg) {
-                return msg
+                showToast.methods.showErrToast(msg)
             }
+            if (msg) return msg
         }
     }
 }
