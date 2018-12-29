@@ -5,11 +5,11 @@ import {
     SETUSERINFO,
     SETLOGINSTATUS,
     SETSIGNIN
-} from '@/store/mutations-type'
+} from '@/store/mutation-types'
 
 const state = {
     // 用户信息
-    userInfo: { },
+    userInfo: {},
     // 登陆状态
     loginStatus: 0,
     // 注册状态
@@ -35,44 +35,45 @@ const mutations = {
         state.userInfo = user
     },
 
-    [SETLOGINSTATUS] (state, status) {
-        state.loginStatus = status
+    [SETLOGINSTATUS] (state, payload) {
+        state.loginStatus = payload.loginStatus
     },
 
-    [SETSIGNIN] (state, status) {
-        state.signinStatus = status
+    [SETSIGNIN] (state, payload) {
+        state.signinStatus = payload.signinStatus
     }
 }
 
 const actions = {
     async vuexLogin ({ commit }, data) {
         const { user, msg } = data
-
         let res = await api.user.login(user)
         localStorage.setItem('token', res.token)
-        if (res.error) return false
 
+        if (res.error) return
         if (msg) {
             showToast.methods.showSucToast(msg)
         }
-        commit(SETLOGINSTATUS, 1)
+        commit(SETLOGINSTATUS, { loginStatus: 1 })
         commit(SETUSERINFO, user)
     },
 
     async vuexSignin ({ commit }, data) {
         const { user, msg } = data
         let res = await api.user.signin(user)
-        if (res.error) return false
+        if (res.error) return
 
         // 需要成功提示传入 msg
         if (msg) {
             showToast.methods.showSucToast(msg)
         }
-        commit(SETSIGNIN, 1)
+        commit(SETSIGNIN, { signinStatus: 1 })
     }
 }
 
 export default {
+    // 命名空间
+    namespaced: true,
     state,
     mutations,
     getters,

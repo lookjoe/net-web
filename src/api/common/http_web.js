@@ -1,4 +1,5 @@
 import config from '../config/common'
+import showToast from '@/mixin'
 
 const SERVER_URL = config.SERVER_URL
 
@@ -20,6 +21,9 @@ function parseJSON (response) {
 function checkCode (data) {
     if (data.msg) {
         return data.msg
+    }
+    if (data.error) {
+        showToast.methods.showErrToast(data.error)
     }
     return data
 }

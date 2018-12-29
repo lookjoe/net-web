@@ -3,8 +3,8 @@
         <div class="center">
             账号: <input type="text" name="text" v-model="userInfo.username" />
             密码: <input type="password" name="password" v-model="userInfo.password" />
-            <input @click="signin()" type="submit" value="注册" />
-            <input @click="login()" type="submit" value="登录" />
+            <input @click="signin" type="submit" value="注册" />
+            <input @click="login" type="submit" value="登录" />
         </div>
         <div class="welcome">
             是否登陆：{{ loginStatus }}
@@ -32,23 +32,27 @@ export default {
     },
 
     computed: {
-        ...mapGetters([
+        ...mapGetters('moduleUser', [
             'getUserInfo',
             'getLoginStatus',
             'getSignInStatus'
         ]),
 
         loginStatus () {
-            return this.getLoginStatus ? '已经登陆' : '未登陆'
+            return this.getLoginStatus
+                ? '已经登陆'
+                : '未登陆'
         },
 
         signinStatus () {
-            return this.getSignInStatus ? '成功' : ''
+            return this.getSignInStatus
+                ? '成功'
+                : ''
         }
     },
 
     methods: {
-        ...mapActions([
+        ...mapActions('moduleUser', [
             'vuexLogin',
             'vuexSignin'
         ]),
@@ -67,7 +71,7 @@ export default {
 
         getUser () {
             let msg = this.userCheck()
-            if (msg) return false
+            if (msg) return
             return {
                 name: this.userInfo.username,
                 password: this.userInfo.password
@@ -75,8 +79,7 @@ export default {
         },
 
         signin () {
-            // 返回 false return
-            if (!this.getUser()) return false
+            if (!this.getUser()) return
             this.vuexSignin({
                 user: this.getUser(),
                 msg: '注册成功'
@@ -84,7 +87,7 @@ export default {
         },
 
         login () {
-            if (!this.getUser()) return false
+            if (!this.getUser()) return
             this.vuexLogin({
                 user: this.getUser(),
                 msg: '登陆成功'

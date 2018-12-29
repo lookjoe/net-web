@@ -2,13 +2,14 @@
     <div class="upload">
         <img :src="imgSrc" class="img" alt="图片" />
         <div class="img-box">
-        <div  @click="changeAvtor()">
-            选择图片并上传
-        </div>
-        <input class="file" style="display: none" @change="upload" type="file" />
-        <div>
-            图片是否上传成功: {{ upImg }}
-        </div>
+            <BaseButton
+                @click.native="changeAvtor"
+                v-bind="btnPost"
+            />
+            <input class="file" style="display: none" @change="upload" type="file" />
+            <div>
+                图片是否上传成功: {{ upImg }}
+            </div>
         </div>
     </div>
 </template>
@@ -20,6 +21,11 @@ export default {
 
     data () {
         return {
+            btnPost: {
+                text: '选择图片并上传',
+                size: 'upload',
+                bgColor: 'red'
+            },
             upImg: '',
             imgSrc: '../static/avtor.jpg'
         }
@@ -27,6 +33,7 @@ export default {
 
     methods: {
         changeAvtor () {
+            console.log('1')
             document.querySelector('input[type=file]').click()
         },
 
@@ -52,5 +59,10 @@ export default {
 .img {
     width: 300px;
     height: 200px;
+}
+.img-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

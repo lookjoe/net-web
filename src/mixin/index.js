@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Toast from '@/components/Wtoast'
+import Toast from '@/components/wtoast'
 
 const ToastConstructor = Vue.extend(Toast)
 
@@ -8,7 +8,7 @@ const toastComponent = (propsData, time) => {
         propsData
     })
     const $toast = t.$mount().$el
-    // 文档外渲染之后挂载 使用 el: '#app' 会替换#app 可以创建空的<div>
+    // 文档外渲染之后挂载
     document.getElementById('app').appendChild($toast)
 
     // 卸载
@@ -17,21 +17,22 @@ const toastComponent = (propsData, time) => {
     }, time)
 }
 
+// 参数解构赋值默认值
+const showToast = (message, type, time = 1000) => {
+    toastComponent({
+        message,
+        type
+    }, time)
+}
+
 export default {
     methods: {
-        showToast (message, type, time = 1000) {
-            toastComponent({
-                message,
-                type
-            }, time)
-        },
-
         showErrToast (message, time) {
-            this.showToast(message, 'err', time)
+            showToast(message, 'err', time)
         },
 
         showSucToast (message, time) {
-            this.showToast(message, 'suc', time)
+            showToast(message, 'suc', time)
         }
     }
 }

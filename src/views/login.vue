@@ -1,7 +1,7 @@
 <template>
     <div class="login">
-        <w-login />
-        <w-upload />
+        <Wlogin />
+        <Wupload />
     </div>
 </template>
 
@@ -11,8 +11,8 @@ import Wupload from '@/components/wupload'
 
 export default {
     components: {
-        'w-login': Wlogin,
-        'w-upload': Wupload
+        'Wlogin': Wlogin,
+        'Wupload': Wupload
     },
 
     data () {

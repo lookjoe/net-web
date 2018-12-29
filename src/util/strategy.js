@@ -4,7 +4,9 @@ import showToast from '@/mixin'
 let strategys = {
     // 是否为空
     isEmpty: (value, error) => {
-        if (!value) return error
+        if (!value) {
+            return error
+        }
     }
 }
 
@@ -31,7 +33,7 @@ class Validator {
                 this.cache.push(() => {
                     testObj.test.call(this, element)
                 })
-                return false
+                return
             }
             let strategysAry = element.strategy.split(':')
             let error = element.error
@@ -50,7 +52,9 @@ class Validator {
             if (msg) {
                 showToast.methods.showErrToast(msg)
             }
-            if (msg) return msg
+            if (msg) {
+                return msg
+            }
         }
     }
 }
