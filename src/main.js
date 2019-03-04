@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from '@/store'
-import mixin from '@/mixin'
+// import mixin from '@/mixin'
 import Api from '@/api/common/api'
 import Strategy from '@/util/strategy'
 import upperFirst from 'lodash/upperFirst'
@@ -14,7 +14,6 @@ Vue.config.productionTip = false
 
 Vue.prototype.$api = Api
 Vue.prototype.$check = Strategy
-Vue.prototype.$a = mixin
 // Vue.mixin(mixin)
 
 const requireComponent = require.context(

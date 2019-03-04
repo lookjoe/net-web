@@ -27,7 +27,7 @@ class Validator {
         this.cache = []
     }
 
-    addRule (msg, rules) {
+    addRule (value, rules) {
         rules.forEach(element => {
             if (!element.strategy || !element.error) {
                 this.cache.push(() => {
@@ -35,11 +35,11 @@ class Validator {
                 })
                 return
             }
-            let strategysAry = element.strategy.split(':')
+            let strategysAry = []
+            let strategy = element.strategy
             let error = element.error
             this.cache.push(() => {
-                let strategy = strategysAry.shift()
-                strategysAry.unshift(msg)
+                strategysAry.unshift(value)
                 strategysAry.push(error)
                 return strategys[strategy].apply(this, strategysAry)
             })
