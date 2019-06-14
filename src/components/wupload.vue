@@ -6,7 +6,12 @@
                 @click.native="changeAvtor"
                 v-bind="btnPost"
             />
-            <input class="file" style="display: none" @change="upload" type="file" />
+            <input
+                class="file"
+                style="display: none"
+                @change="upload"
+                type="file"
+            />
             <div>
                 图片是否上传成功: {{ upImg }}
             </div>
@@ -33,7 +38,6 @@ export default {
 
     methods: {
         changeAvtor () {
-            console.log('1')
             document.querySelector('input[type=file]').click()
         },
 

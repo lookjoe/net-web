@@ -1,10 +1,26 @@
 <template>
     <div class="hello">
         <div class="center">
-            账号: <input type="text" name="text" v-model="userInfo.username" />
-            密码: <input type="password" name="password" v-model="userInfo.password" />
-            <input @click="signin" type="submit" value="注册" />
-            <input @click="login" type="submit" value="登录" />
+            账号: <input
+                      type="text"
+                      name="text"
+                      v-model="userInfo.username"
+                  />
+            密码: <input
+                      type="password"
+                      name="password"
+                      v-model="userInfo.password"
+                  />
+            <input
+                @click="signin"
+                type="submit"
+                value="注册"
+             />
+            <input
+                @click="login"
+                type="submit"
+                value="登录"
+            />
         </div>
         <div class="welcome">
             是否登陆：{{ loginStatus }}
